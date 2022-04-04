@@ -38,7 +38,9 @@ def reset_sliders(value=0):
 
 
 def render(camera_params):
-    st.subheader("Distorted points on image plane")
+    st.title(
+        "Visualization of the effect of the coefficients in the OpenCV distortion model"
+    )
 
     camera_matrix, dist_coefs = convert_camera_params(camera_params)
     points_3d = get_points_3d()
@@ -47,6 +49,7 @@ def render(camera_params):
     fig, ax = plt.subplots(1, 1, figsize=(8, 8))
     ax.plot(points_2d_proj[:, 0], points_2d_proj[:, 1], ls="", marker=".")
 
+    ax.set_title("Distorted points on image plane", fontsize=15)
     width = camera_matrix[0][2] * 2
     height = camera_matrix[1][2] * 2
     ax.set_xlim(0, width)
@@ -94,7 +97,6 @@ def project_points(points_3d, camera_matrix, dist_coefs):
     return points_2d.reshape(-1, 2)
 
 
-
 def print_text():
     st.latex(
         r"""
@@ -108,6 +110,7 @@ y'' = y' \frac{1 + k_1 r^2 + k_2 r^4 + k_3 r^6}{1 + k_4 r^2 + k_5 r^4 + k_6 r^6}
         "(https://docs.opencv.org/4.5.5/d9/d0c/group__calib3d.html) "
         "for the complete distortion formula."
     )
+
 
 if __name__ == "__main__":
     main()
